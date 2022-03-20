@@ -1,0 +1,75 @@
+函数：sample
+描述：使用有或没有替换的从参数x的元素中获取指定大小的样本，
+参数：x--一个由要从中抽样的元素组成的向量，或一个正整数；size--非负整数, replace = FALSE,
+使用：sample(c("group1", "group2"), size = ncol(pbmc3k.final), replace = TRUE)
+
+函数：RidgePlot
+描述：使用单细胞数据（基因表达谱、矩阵、PC分数）绘制一个桥形图，
+参数：object--Seurat对象；features--需要绘制的特征(基因表达，矩阵，PC分数，任何可以通过FetchData检索到的内容)；cols--使用什么颜色绘制
+使用：RidgePlot(pbmc3k.final, features = features, ncol = 2)
+
+函数：VlnPlot
+描述：使用单细胞数据（基因表达谱、矩阵、PC分数）绘制一个小提琴图
+参数：object--Seurat对象；features--需要绘制的特征(基因表达，矩阵，PC分数，任何可以通过FetchData检索到的内容)；cols--使用什么颜色绘制
+使用：VlnPlot(pbmc3k.final, features = features)
+
+函数：FeaturePlot
+描述：根据特征为降维后的单细胞数据绘图。可以是基因表达谱、PC得分、检测到基因数量等。
+参数：object--Seurat对象；features--特征的向量，（一个 Assay的特征例如是基因名；或者是来源于元数据的列名，例如表示线粒体百分比的"percent.mito"；
+	  与cell embedding相对应的DimReduc对象的列名(例如pc1分数- "PC_1")；dims--绘图的维度，必须是包含X维度和Y维度长度为2的向量。
+	  min.cutoff/max.cutoff--阈值，对每个特征设置的最小最大值的向量，
+使用：FeaturePlot(pbmc3k.final, features = features)
+
+函数：DotPlot
+描述：用于直观显示特征表达如何跨不同cluster变化的方法
+参数：object--Seurat对象；features--特征的向量，cells--需要显示多少个细胞
+使用：DotPlot(pbmc3k.final, features = features) + RotatedAxis()
+
+函数：DoHeatmap
+描述：绘制单细胞特征表达的热图
+参数：object--Seurat对象；features--特征的向量，size--文本大小
+使用：DoHeatmap(subset(pbmc3k.final, downsample = 100), features = features, size = 3)
+
+函数：VariableFeatures
+描述：从Assay对象中选择以及设置特征信息
+参数：object--Assay对象；selection.method--所使用选择的方式（“vst”，“sctransform” or “sct”，“mean.var.plot”, “dispersion”, “mvp”, or “disp”）
+使用：VariableFeatures(pbmc3k.final)
+
+函数：DimPlot
+描述：使用降维处理的方式以2D散点图的形式展示细胞所处的位置
+参数：bject--Seurat对象；dims-绘制的维数；cells--所要绘制的细胞数；reduction--使用哪种降维方式；group.by--分组依据，使用元数据的列名；
+split.by--将图片按照元数据的列名进行分割
+使用：DimPlot(pbmc3k.final, reduction = "umap")
+
+函数：FetchData
+描述：从Seurat对象中检索细胞集的数据（例如特征表达谱、PCA得分、度量值等信息）
+参数：object--Seurat对象；vars--所要抓取变量的列表；
+使用：FetchData(pbmc3k.final, vars = c("ident", "PC_1", "nFeature_RNA")
+
+函数：RenameIdents
+描述：获取，设置以及操作一个对象的identity类
+参数：object--Seurat对象；
+使用：RenameIdents(object, ids)
+
+函数：LabelClusters
+描述：对基于ggplot2的散点图使用标签标注cluster
+参数：plot--图形对象；id--对散点图进行标注的变量；clusters--需要要标注的cluster 的id向量；labels--自定义标签
+使用：LabelClusters(plot = plot, id = "ident")
+
+函数：LabelPoints
+描述：对散点图中的点进行标注
+参数：plot--图形对象；points--需要标注点的向量，repel--避免标签重叠。
+使用：LabelPoints(plot = plot, points = TopCells(object = pbmc3k.final[["pca"]]), repel = TRUE)
+
+函数：TopCells
+描述：根据降维算法，返回贡献度最高的细胞
+参数：object--DimReduc对象；dim--所使用的降维算法；ncells--所要返回的细胞数
+使用：TopCells(object = pbmc_small[["pca"]], dim = 2, ncells = 5)
+
+思考：Error in UseMethod("grid.draw") : 
+  no applicable method for 'grid.draw' applied to an object of class "c('theme', 'gg')" 报错未解决。导致出现空白图片
+  使用dim(pbmc3k.final) 函数查看到数据结构为13714  2638，打印出来为2638行。
+  
+  # 视频课中
+  # pbmc <- RenameIdents(pbmc, new.clusters.id)
+  # 是对active.ident进行了修改
