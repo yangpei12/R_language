@@ -33,4 +33,3 @@ pmapParas <- list(seq(rowLength), rep(splited_col_name, rowLength), rep(splited_
 # 使用pmap函数将参数批量传递进去函数
 result <- pmap(pmapParas, ~oneFun(..1,..2,..3)) %>% do.call(rbind,.)
 write.xlsx(result, 'result.xlsx')
-

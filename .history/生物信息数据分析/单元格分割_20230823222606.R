@@ -7,7 +7,7 @@ rna_data <- read.xlsx('CVSA_Gene_differential_expression.xlsx')
 # rowId参数：1，2，3，...dim(test_data)[1]
 # splitedCol参数：需要进行分列的列
 oneFun <- function(rowId, splitedCol, splited_symbol){
-    gene_name <- rna_data[rowId, splitedCol]
+    gene_name <- rna_data[rowId,splitedCol]
     genes <- strsplit(rna_data[rowId,splitedCol], split = splited_symbol)
   
     # 在原始数据中保留除需要拆分的列
@@ -33,4 +33,3 @@ pmapParas <- list(seq(rowLength), rep(splited_col_name, rowLength), rep(splited_
 # 使用pmap函数将参数批量传递进去函数
 result <- pmap(pmapParas, ~oneFun(..1,..2,..3)) %>% do.call(rbind,.)
 write.xlsx(result, 'result.xlsx')
-
